@@ -24,19 +24,12 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Add Ubuntu Jammy repository
-        run: |
-          echo "Types: deb" | sudo tee /etc/apt/sources.list.d/ubuntu-jammy.sources
-          echo "URIs: http://gb.archive.ubuntu.com/ubuntu" | sudo tee -a /etc/apt/sources.list.d/ubuntu-jammy.sources
-          echo "Suites: jammy" | sudo tee -a /etc/apt/sources.list.d/ubuntu-jammy.sources
-          echo "Components: main" | sudo tee -a /etc/apt/sources.list.d/ubuntu-jammy.sources
-          echo "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg" | sudo tee -a /etc/apt/sources.list.d/ubuntu-jammy.sources
-          sudo apt-get update
-
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.0-dev \
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libjavascriptcoregtk-4.1-dev \
             build-essential \
             curl \
             wget \
