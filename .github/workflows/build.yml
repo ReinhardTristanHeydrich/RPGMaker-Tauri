@@ -54,5 +54,6 @@ jobs:
         with:
           name: tauri-app-${{ matrix.platform }}
           path: |
-            src-tauri/target/release/bundle/**
+            src-tauri/target/release/*.exe
+            Game_Contents/**
           if-no-files-found: error
