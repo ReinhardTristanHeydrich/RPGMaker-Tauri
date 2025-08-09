@@ -20,12 +20,7 @@
   "app": {
     "security": {
       "csp": null
-    },
-    "windows": [
-      {
-        "devtools": true
-      }
-    ]
+    }
   },
   "plugins": {
     "opener": {
