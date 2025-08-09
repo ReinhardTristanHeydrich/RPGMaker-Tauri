@@ -32,7 +32,9 @@ pub fn run() {
         // 3. Tenta alguns diretórios comuns relativos
         let common_paths = [
             "Game_Contents",
-            "www",
+            "../Game_Contents",
+            "../../Game_Contents",
+            "./dist/Game_Contents",
         ];
         
         for path in &common_paths {
@@ -102,8 +104,7 @@ pub fn run() {
                 .title("RPG Maker Game Launcher")
                 .inner_size(1280.0, 720.0)
                 .resizable(true)
-                // Habilitar DevTools permanentemente
-                .devtools(true)
+                .devtools(true) //Should enable DevTools
                 .build()?;
             
             Ok(())
