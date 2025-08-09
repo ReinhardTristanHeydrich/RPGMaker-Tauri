@@ -1,7 +1,8 @@
 mod external_localhost_plugin;
 
 use std::path::PathBuf;
-use tauri::{WebviewUrl, WebviewWindowBuilder, GlobalShortcutEvent};
+use tauri::{WebviewUrl, WebviewWindowBuilder, Manager};
+use tauri_plugin_global_shortcut::GlobalShortcutExt;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -33,6 +34,8 @@ pub fn run() {
         let common_paths = [
             "Game_Contents",
             "www",
+            "../Game_Contents",
+            "../www",
         ];
         
         for path in &common_paths {
@@ -102,19 +105,16 @@ pub fn run() {
                 .title("RPG Maker Game Launcher")
                 .inner_size(1280.0, 720.0)
                 .resizable(true)
-                .devtools(true) //Activate Devtools
+                // Habilitar DevTools permanentemente
+                .devtools(true)
                 .build()?;
             
             // Registrar atalho global para F12
             let app_handle = app.handle().clone();
             app.global_shortcut().register("F12", move || {
                 if let Some(window) = app_handle.get_webview_window("main") {
-                    // Toggle DevTools
-                    if window.is_devtools_open() {
-                        let _ = window.close_devtools();
-                    } else {
-                        let _ = window.open_devtools();
-                    }
+                    // Simplesmente abre DevTools (se já estiver aberto, o Tauri gerencia)
+                    let _ = window.open_devtools();
                 }
             })?;
             
@@ -122,11 +122,7 @@ pub fn run() {
             let app_handle2 = app.handle().clone();
             app.global_shortcut().register("Ctrl+Shift+I", move || {
                 if let Some(window) = app_handle2.get_webview_window("main") {
-                    if window.is_devtools_open() {
-                        let _ = window.close_devtools();
-                    } else {
-                        let _ = window.open_devtools();
-                    }
+                    let _ = window.open_devtools();
                 }
             })?;
             
