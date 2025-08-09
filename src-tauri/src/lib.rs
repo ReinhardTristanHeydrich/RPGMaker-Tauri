@@ -100,7 +100,7 @@ pub fn run() {
             // Aguarda um pouco para garantir que o servidor esteja rodando
             std::thread::sleep(std::time::Duration::from_millis(500));
             
-            let _window = WebviewWindowBuilder::new(app, "main", webview_url)
+            WebviewWindowBuilder::new(app, "main", webview_url)
                 .title("RPG Maker Game Launcher")
                 .inner_size(1280.0, 720.0)
                 .resizable(true)
