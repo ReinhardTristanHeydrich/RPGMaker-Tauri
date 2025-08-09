@@ -32,9 +32,7 @@ pub fn run() {
         // 3. Tenta alguns diretórios comuns relativos
         let common_paths = [
             "Game_Contents",
-            "../Game_Contents",
-            "../../Game_Contents",
-            "./dist/Game_Contents",
+            "www",
         ];
         
         for path in &common_paths {
