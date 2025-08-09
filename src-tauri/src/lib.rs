@@ -151,10 +151,6 @@ pub fn run() {
             "../Game_Contents",
             "../../Game_Contents",
             "./dist/Game_Contents",
-            "www",
-            "../www",
-            "../../www",
-            "./dist/www",
         ];
         
         for path in &common_paths {
