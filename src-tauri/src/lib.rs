@@ -35,6 +35,10 @@ pub fn run() {
             "../Game_Contents",
             "../../Game_Contents",
             "./dist/Game_Contents",
+            "www",
+            "../www",
+            "../../www",
+            "./dist/www",
         ];
         
         for path in &common_paths {
@@ -104,7 +108,6 @@ pub fn run() {
                 .title("RPG Maker Game Launcher")
                 .inner_size(1280.0, 720.0)
                 .resizable(true)
-                .devtools(true) //Should enable DevTools
                 .build()?;
             
             Ok(())
