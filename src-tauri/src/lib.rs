@@ -1,7 +1,7 @@
 mod external_localhost_plugin;
 
 use std::path::PathBuf;
-use tauri::{WebviewUrl, WebviewWindowBuilder};
+use tauri::{WebviewUrl, WebviewWindowBuilder, GlobalShortcutEvent};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -100,15 +100,42 @@ pub fn run() {
             // Aguarda um pouco para garantir que o servidor esteja rodando
             std::thread::sleep(std::time::Duration::from_millis(500));
             
-            WebviewWindowBuilder::new(app, "main", webview_url)
+            let window = WebviewWindowBuilder::new(app, "main", webview_url)
                 .title("RPG Maker Game Launcher")
                 .inner_size(1280.0, 720.0)
                 .resizable(true)
+                .devtools(true) //Activate Devtools
                 .build()?;
+            
+            // Registrar atalho global para F12
+            let app_handle = app.handle().clone();
+            app.global_shortcut().register("F12", move || {
+                if let Some(window) = app_handle.get_webview_window("main") {
+                    // Toggle DevTools
+                    if window.is_devtools_open() {
+                        let _ = window.close_devtools();
+                    } else {
+                        let _ = window.open_devtools();
+                    }
+                }
+            })?;
+            
+            // Também registrar Ctrl+Shift+I (atalho alternativo comum)
+            let app_handle2 = app.handle().clone();
+            app.global_shortcut().register("Ctrl+Shift+I", move || {
+                if let Some(window) = app_handle2.get_webview_window("main") {
+                    if window.is_devtools_open() {
+                        let _ = window.close_devtools();
+                    } else {
+                        let _ = window.open_devtools();
+                    }
+                }
+            })?;
             
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
